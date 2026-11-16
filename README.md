@@ -4,7 +4,7 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 Many individuals from underserved backgrounds face systemic hurdles: navigating complex immigration laws, opening bank accounts without a Social Security Number, finding affordable medical care, and having unstable internet access. 
 
@@ -16,13 +16,13 @@ Many individuals from underserved backgrounds face systemic hurdles: navigating 
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
-### 🗺️ 1. Interactive Life Map (Gamified Tech Tree)
+###  1. Interactive Life Map (Gamified Tech Tree)
 - **3 Core Pathways**:
-  - 💼 **Finance & Jobs**: Banking without SSN, secured credit cards, budgeting (50/30/20 rule), resume skill translation, and entry roles (Phlebotomy, IT Helpdesk).
-  - 🏥 **Health & Wellness**: Community Health Centers (FQHCs), Medicaid/CHIP, Trauma-Informed mental health, campus wellness, and 988 support.
-  - 🌐 **Immigration & Legal**: Constitutional rights, avoiding fraudulent "notarios", EAD work authorization, Green Card timeline, F-1 student visas, and DACA support.
+  -  **Finance & Jobs**: Banking without SSN, secured credit cards, budgeting (50/30/20 rule), resume skill translation, and entry roles (Phlebotomy, IT Helpdesk).
+  -  **Health & Wellness**: Community Health Centers (FQHCs), Medicaid/CHIP, Trauma-Informed mental health, campus wellness, and 988 support.
+  -  **Immigration & Legal**: Constitutional rights, avoiding fraudulent "notarios", EAD work authorization, Green Card timeline, F-1 student visas, and DACA support.
 - **Tiered Progression**:
   - **Tier 1 (Foundation)**: Readily accessible starter steps.
   - **Tier 2 (Building Up)**: Unlocks only after prerequisite foundational nodes are completed.
@@ -42,7 +42,7 @@ Many individuals from underserved backgrounds face systemic hurdles: navigating 
   - `immigrationresourceguidemvp.pdf`
 - Implements the AI SDK streaming protocol (`createUIMessageStreamResponse`), delivering natural, word-by-word conversational replies with zero API key dependencies.
 
-### 🌐 4. Multilingual & RTL Infrastructure
+###  4. Multilingual & RTL Infrastructure
 - Native translations across English, Spanish, and Farsi for all chat responses, milestone nodes, tab labels, and PDF documents.
 - Automatically adjusts document direction (`dir="rtl"`) and flips UI alignment for Persian.
 
@@ -128,7 +128,7 @@ camino-design-main/
 
 ---
 
-## 🧪 Testing the MVP Features
+##  Testing the MVP Features
 
 ### 1. Exploring the Life Map
 - Click the **"My Map"** tab at the top right (or the *"View Interactive Life Map →"* button on the left).
@@ -155,7 +155,7 @@ camino-design-main/
 
 ---
 
-## 🔒 Privacy & Accessibility
+##  Privacy & Accessibility
 - **No Sign-In Required**: Progress is stored locally in the user's browser, respecting user privacy.
 - **WCAG Standards**: High-contrast ratios, focus rings for keyboard navigation, screen-reader friendly labels (`aria-label`, `role="tablist"`, `aria-live`).
 - **Low Bandwidth Optimization**: Minimal external dependencies; zero heavy graphics libraries.

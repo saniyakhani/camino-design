@@ -2,7 +2,7 @@
 
 import { useChat } from '@ai-sdk/react'
 import { ArrowUp, Check, RotateCcw } from 'lucide-react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { MessageBubble } from '@/components/chat/message-bubble'
 import { Button } from '@/components/ui/button'
 import {
@@ -29,7 +29,20 @@ const initialScript: ScriptItem[] = [{ id: 'ask-name', role: 'bot', kind: 'askNa
 let idCounter = 0
 const nextId = () => `s-${++idCounter}`
 
-export function ChatPanel({ language }: { language: Language }) {
+export function ChatPanel({
+  language,
+  onNameSet,
+  onTopicSet,
+  onAiMessage,
+}: {
+  language: Language
+  /** Called once, the moment the user submits their name */
+  onNameSet?: (name: string) => void
+  /** Called when the user picks a topic (finance/health/immigration) */
+  onTopicSet?: (topic: Topic) => void
+  /** Called each time a full AI message finishes streaming */
+  onAiMessage?: (text: string) => void
+}) {
   const t = dictionary[language]
   const [script, setScript] = useState<ScriptItem[]>(initialScript)
   const [step, setStep] = useState<Step>('name')
@@ -42,6 +55,21 @@ export function ChatPanel({ language }: { language: Language }) {
   const { messages, sendMessage, status, error, setMessages, stop } = useChat()
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  // Track the last AI message ID we forwarded so we don't double-fire
+  const lastAiMsgIdRef = useRef<string | null>(null)
+
+  // ── Forward completed AI messages for milestone keyword detection ────────
+  useEffect(() => {
+    if (status !== 'ready' || messages.length === 0) return
+    const last = messages[messages.length - 1]
+    if (last.role !== 'assistant') return
+    if (last.id === lastAiMsgIdRef.current) return
+    lastAiMsgIdRef.current = last.id
+    const text = last.parts
+      .map((p) => (p.type === 'text' ? p.text : ''))
+      .join('')
+    if (text) onAiMessage?.(text)
+  }, [status, messages, onAiMessage])
 
   useEffect(() => {
     const el = scrollRef.current
@@ -60,6 +88,7 @@ export function ChatPanel({ language }: { language: Language }) {
 
   const submitName = (value: string) => {
     setName(value)
+    onNameSet?.(value)   // ← lift name up to PlannerApp
     setScript((s) => [
       ...s,
       { id: nextId(), role: 'user', kind: 'text', text: value },
@@ -82,6 +111,7 @@ export function ChatPanel({ language }: { language: Language }) {
 
   const chooseTopic = (chosen: Topic) => {
     setTopic(chosen)
+    onTopicSet?.(chosen)   // ← lift topic up to PlannerApp
     setStep('chat')
     sendMessage(
       { text: `${t.topicLetters[chosen]}. ${t.topics[chosen]}` },
